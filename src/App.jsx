@@ -16,7 +16,7 @@ const App = () => {
     RenderData();
   },[])
   return (
-    <div className='container mx-auto grid grid-cols-5'>
+     <div className='container mx-auto grid grid-cols-5 '>
     {
       
       products?.map(pd =>  <Card key={pd.id} pd={pd} /> )
