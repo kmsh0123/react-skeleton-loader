@@ -2,17 +2,26 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Card from './Card';
 import Pagination from './Pagination';
-import ReactPaginate from 'react-paginate';
+import {useSearchParams} from 'react-router-dom'
+
 
 const DataFetch = () => {
   const apiUrl = "https://dummyjson.com/products/"
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(searchParams.get("page")) || 1
+  );
+  const page = searchParams.get("page") ? searchParams.get("page") : currentPage;
+
   const [products,setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pagesPerPage] = useState(20);
+  const [pagesPerPage] = useState(10);
   const itemsPerPage = 100;
 
+  console.log(page);
+
   const RenderData = async () => {
-    const {data}  = await axios.get(`${apiUrl}?page=${currentPage}&limit=${itemsPerPage}`);
+    const {data}  = await axios.get(`${apiUrl}?page=${searchParams}&limit=${itemsPerPage}`);
     console.log(data);
     setProducts(data.products);
   }
@@ -39,6 +48,8 @@ const DataFetch = () => {
      pagesPerPage = {pagesPerPage}
      setCurrentPage = {setCurrentPage}
      currentPage={currentPage}
+     setSearchParams={setSearchParams}
+     searchParams={searchParams}
     />
    </>
   )
