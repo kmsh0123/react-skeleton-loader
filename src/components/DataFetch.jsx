@@ -7,12 +7,15 @@ import {useSearchParams} from 'react-router-dom'
 
 const DataFetch = () => {
   const apiUrl = "https://dummyjson.com/products/"
+
+  //Pagination
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [currentPage, setCurrentPage] = useState(
     parseInt(searchParams.get("page")) || 1
   );
   const page = searchParams.get("page") ? searchParams.get("page") : currentPage;
+  //Pagination
 
   const [products,setProducts] = useState([]);
   const [pagesPerPage] = useState(10);
@@ -21,7 +24,7 @@ const DataFetch = () => {
   console.log(page);
 
   const RenderData = async () => {
-    const {data}  = await axios.get(`${apiUrl}?page=${searchParams}&limit=${itemsPerPage}`);
+    const {data}  = await axios.get(`${apiUrl}?limit=${itemsPerPage}`);
     console.log(data);
     setProducts(data.products);
   }
@@ -29,9 +32,11 @@ const DataFetch = () => {
     RenderData();  
   },[currentPage])
 
+  //Pagination
   const lastPostIndex = currentPage * pagesPerPage;
   const firstPostIndex = lastPostIndex - pagesPerPage;
   const currentPosts = products.slice(firstPostIndex, lastPostIndex);
+  //Pagination
 
  
 
