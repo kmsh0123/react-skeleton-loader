@@ -6,13 +6,12 @@ import 'react-loading-skeleton/dist/skeleton.css'
 const Card = ({pd}) => {
   const [loading,setLoading] = useState(true);
   const [title,setTitle] = useState();
-  console.log(title);
  
   useEffect(()=>{
     setTimeout(()=>{
       setLoading(false);
       setTitle(pd.title);
-    },5000)
+    },1000)
   })
 
   return (
